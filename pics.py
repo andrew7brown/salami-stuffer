@@ -11,7 +11,7 @@ import numpy as np
 import tensorflow as tf
 from PIL import Image
 
-DATA_URL = 'http://download.tensorflow.org/models/adv_inception_v3_2017_08_18.tar.gz'
+DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
 MODEL_DIR = '/tmp/imagenet'
 SAVE_DIR = '/Users/andrew7brown/tmp/'
 SEARCH_TERM = 'Window'
