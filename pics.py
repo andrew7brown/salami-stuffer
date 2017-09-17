@@ -12,8 +12,8 @@ import tensorflow as tf
 from PIL import Image
 
 DATA_URL = 'http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz'
-MODEL_DIR = '/tmp/imagenet'
-SAVE_DIR = '/Users/andrew7brown/tmp/'
+MODEL_DIR = 'C:/Users/andre/Documents/tmp/imagenet'
+SAVE_DIR = 'C:/Users/andre/Documents/tmp/'
 SEARCH_TERM = 'Window'
 NUM_TOP_PREDICTIONS = 20
 
