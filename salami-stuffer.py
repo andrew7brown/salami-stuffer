@@ -1,6 +1,6 @@
 from flask import Flask
 
-import pics
+import ImageClassifier
 import json
 
 app = Flask(__name__)
@@ -12,10 +12,8 @@ def hello_world():
 
 @app.route('/test')
 def test():
-    scores = pics.run_inference_on_image("c:/Users/andre/Documents/tmp/susandennis.n-1505658311.jpg")
-    return json.dumps(str(scores))
-
-
+    scores = ImageClassifier.classifyImage("/Users/andrew7brown/tmp/susandennis.n-1505773338.jpg",5)
+    return scores
 
 if __name__ == '__main__':
     app.run()
