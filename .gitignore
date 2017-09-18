@@ -1,1 +1,9 @@
 .idea/
+*target/*
+*.jar
+.classpath
+.project
+*.settings*
+src/main/resources/static
+/target/
+
