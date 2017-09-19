@@ -5,6 +5,7 @@ import sys
 import tarfile
 import urllib.request
 import json
+import argparse
 
 import numpy as np
 import tensorflow as tf
@@ -156,3 +157,14 @@ def maybe_download_and_extract():
 def classifyImage(image, score_count):
     scores = run_inference_on_image(image, score_count)
     return json.dumps(str(scores))
+
+
+def main():
+    print(classifyImage(args.filename, int(args.num_scores)))
+
+if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument("filename")
+    parser.add_argument("num_scores")
+    args = parser.parse_args()
+    main()
