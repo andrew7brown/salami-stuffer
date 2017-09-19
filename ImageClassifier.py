@@ -15,6 +15,7 @@ MODEL_DIR = '/tmp/imagenet'
 
 NUM_TOP_PREDICTIONS = 10
 
+
 class NodeLookup(object):
     """Converts integer node ID's to human readable labels."""
 
@@ -100,8 +101,6 @@ def run_inference_on_image(image, score_count):
       Scores dictionary
     """
 
-    scores = {}
-
     if not tf.gfile.Exists(image):
         tf.logging.fatal('File does not exist %s', image)
     image_data = tf.gfile.FastGFile(image, 'rb').read()
@@ -126,12 +125,14 @@ def run_inference_on_image(image, score_count):
         # Creates node ID --> English string lookup.
         node_lookup = NodeLookup()
 
+        list_of_scores = []
         top_k = predictions.argsort()[-score_count:][::-1]
         for node_id in top_k:
             human_string = node_lookup.id_to_string(node_id)
             score = predictions[node_id]
-            scores[human_string] = score
-    return scores
+            scores = {"tags": human_string, "weight": score}
+            list_of_scores.append(scores)
+    return list_of_scores
 
 
 def maybe_download_and_extract():
@@ -154,13 +155,16 @@ def maybe_download_and_extract():
         print('Successfully downloaded', filename, statinfo.st_size, 'bytes.')
     tarfile.open(filepath, 'r:gz').extractall(dest_directory)
 
+
 def classifyImage(image, score_count):
     scores = run_inference_on_image(image, score_count)
+
     return json.dumps(str(scores))
 
 
 def main():
     print(classifyImage(args.filename, int(args.num_scores)))
+
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
