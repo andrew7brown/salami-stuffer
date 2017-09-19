@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -28,6 +29,12 @@ public class PhotoCapture {
 	List<Result> results;
 
 	public PhotoCapture(){};
+	
+	public PhotoCapture(String saveUri, LocalDate timestamp) {
+		this.saveUri = saveUri;
+		this.timestamp = timestamp;
+		this.results = new ArrayList<Result>();
+	}
 	
 	public PhotoCapture(String saveUri, LocalDate timestamp, List<Result> results) {
 		this.saveUri = saveUri;

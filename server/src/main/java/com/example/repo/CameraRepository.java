@@ -6,4 +6,6 @@ import com.example.entities.Camera;
 
 public interface CameraRepository extends CrudRepository<Camera, Long>{
 
+	public Camera findOneCameraByUrl(String url);
+	
 }
