@@ -1,5 +1,6 @@
 package com.example.entities;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -30,6 +31,15 @@ public class Camera {
 	List<PhotoCapture> photos;
 	
 	public Camera(){};
+	
+	public Camera(String latitude, String longitude, String namedLocation, String url, Boolean active) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.namedLocation = namedLocation;
+		this.url = url;
+		this.active = active;
+		this.photos = new ArrayList<PhotoCapture>();
+	}
 	
 	public Camera(String latitude, String longitude, String namedLocation, String url, Boolean active,
 			List<PhotoCapture> photos) {

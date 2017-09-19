@@ -29,13 +29,14 @@ public class CameraController {
 	@RequestMapping("/addCameras")
 	public String addCameras() {
 
-		Result result = new Result("cat", 0.245);
-
-		PhotoCapture photo = new PhotoCapture("/some/file", LocalDate.now(), Arrays.asList(result));
-
-		Camera cam = new Camera("123", "123", "Denver", "http://i.cotrip.org/dimages/camera?imageURL=remote/CTMCCAM025N213-50-N.jpg", true, Arrays.asList(photo));
-
-		this.cameraRepo.save(cam);
+//		Result result = new Result("cat", 0.245);
+//
+//		PhotoCapture photo = new PhotoCapture("/some/file", LocalDate.now(), Arrays.asList(result));
+		 
+		Camera cam1 = new Camera("39.783317", "104.989556", "I-25 & 44th Ave", "http://i.cotrip.org/dimages/camera?imageURL=remote/CTMCCAM025N213-50-N.jpg", true);
+		Camera cam2 = new Camera("123", "123", "Susan", "http://susandennis.noip.me/jpg/image.jpg", true);
+		this.cameraRepo.save(cam1);
+		this.cameraRepo.save(cam2);
 
 		return "loaded cameras";
 	}
