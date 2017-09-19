@@ -6,4 +6,5 @@
 *.settings*
 src/main/resources/static
 /target/
-
+*.jpg
+*.jpeg

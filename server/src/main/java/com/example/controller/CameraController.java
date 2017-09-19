@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.example.entities.Camera;
 import com.example.entities.PhotoCapture;
 import com.example.entities.Result;
+import com.example.profiler.ImageProfiler;
 import com.example.repo.CameraRepository;
 
 @RestController
@@ -21,6 +22,9 @@ public class CameraController {
 
 	@Autowired
 	CameraRepository cameraRepo;
+	
+	@Autowired
+	ImageProfiler profiler;
 
 	@RequestMapping("/addCameras")
 	public String addCameras() {
@@ -29,9 +33,9 @@ public class CameraController {
 
 		PhotoCapture photo = new PhotoCapture("/some/file", LocalDate.now(), Arrays.asList(result));
 
-		Camera cam = new Camera("123", "123", "New York", "www.google.com", true, Arrays.asList(photo));
+		Camera cam = new Camera("123", "123", "Denver", "http://i.cotrip.org/dimages/camera?imageURL=remote/CTMCCAM025N213-50-N.jpg", true, Arrays.asList(photo));
 
-		cameraRepo.save(cam);
+		this.cameraRepo.save(cam);
 
 		return "loaded cameras";
 	}
@@ -42,5 +46,10 @@ public class CameraController {
 		return StreamSupport.stream(cams.spliterator(), true)
 			.map(cam -> cam.getUrl())
 			.collect(Collectors.toList());
+	}
+	
+	@RequestMapping("/test")
+	public void test() {
+		profiler.run();
 	}
 }
