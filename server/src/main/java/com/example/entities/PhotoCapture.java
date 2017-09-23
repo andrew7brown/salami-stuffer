@@ -1,6 +1,7 @@
 package com.example.entities;
 
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,8 +12,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 @Entity
 public class PhotoCapture {
 
@@ -21,24 +20,27 @@ public class PhotoCapture {
 	int id;
 	
 	String saveUri;
+
+	LocalTime timestamp;
 	
-	@JsonIgnore
-	LocalDate timestamp;
+	LocalDate date;
 	
 	@OneToMany(cascade=CascadeType.ALL)
 	List<Result> results;
 
 	public PhotoCapture(){};
 	
-	public PhotoCapture(String saveUri, LocalDate timestamp) {
+	public PhotoCapture(String saveUri, LocalTime timestamp, LocalDate date) {
 		this.saveUri = saveUri;
 		this.timestamp = timestamp;
+		this.date = date;
 		this.results = new ArrayList<Result>();
 	}
 	
-	public PhotoCapture(String saveUri, LocalDate timestamp, List<Result> results) {
+	public PhotoCapture(String saveUri, LocalTime timestamp, LocalDate date, List<Result> results) {
 		this.saveUri = saveUri;
 		this.timestamp = timestamp;
+		this.date = date;
 		this.results = results;
 	}
 
@@ -58,11 +60,11 @@ public class PhotoCapture {
 		this.saveUri = saveUri;
 	}
 
-	public LocalDate getTimestamp() {
+	public LocalTime getTimestamp() {
 		return timestamp;
 	}
 
-	public void setTimestamp(LocalDate timestamp) {
+	public void setTimestamp(LocalTime timestamp) {
 		this.timestamp = timestamp;
 	}
 
@@ -72,5 +74,13 @@ public class PhotoCapture {
 
 	public void setResults(List<Result> results) {
 		this.results = results;
+	}
+
+	public LocalDate getDate() {
+		return date;
+	}
+
+	public void setDate(LocalDate date) {
+		this.date = date;
 	}
 }

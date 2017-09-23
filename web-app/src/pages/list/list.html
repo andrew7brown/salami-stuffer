@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      List
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+	<h1>Cameras</h1>
+  <ion-searchbar
+  [(ngModel)]="searchTerm"
+  [showCancelButton]="shouldShowCancel"
+  (ionInput)="setFilteredItems()"
+  (ionCancel)="onCancel($event)">
+</ion-searchbar>
+  <ion-card *ngFor="let camera of cameras">
+    <ion-card-content (click)="launchDetailsPage(camera)" tappable>
+      <h3> {{camera.namedLocation}} </h3>
+      <span> Lat: {{camera.latitude}} Long: {{camera.longitude}}</span>
+      <h3> Active: {{camera.active}} </h3>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

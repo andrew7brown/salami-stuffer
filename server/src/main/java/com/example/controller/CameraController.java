@@ -49,7 +49,7 @@ public class CameraController {
 			.collect(Collectors.toList());
 	}
 	
-	@RequestMapping("/test")
+	@RequestMapping("/enhance")
 	public void test() {
 		profiler.run();
 	}
