@@ -163,6 +163,7 @@ def classifyImage(image, score_count):
 
 
 def main():
+    maybe_download_and_extract()
     print(classifyImage(args.filename, int(args.num_scores)))
 
 
