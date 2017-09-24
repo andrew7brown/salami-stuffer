@@ -14,3 +14,40 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+.main-image {
+	height: auto;
+	width: auto;
+}
+
+ion-card-content {
+	background-color: #08304B;
+}
+
+.tabbar,
+.ion-tabs,
+{
+    background-color: black !important;
+}
+h1,
+h3,
+.toolbar-title {
+	color: white !important;
+}
+
+.toolbar-background,
+ion-title {
+	background-color: black;
+}
+
+.bar-button {
+	color: white;
+}
+
+.scroll-content {
+	background-color: #0E4F64;
+}
+
+.card-content {
+	color: white;
+}
