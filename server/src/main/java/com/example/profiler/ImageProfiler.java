@@ -8,11 +8,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.URL;
 import java.time.LocalDate;
+import java.time.LocalTime;
 import java.util.List;
 import java.util.stream.StreamSupport;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.TransactionSystemException;
 
 import com.example.controller.CameraController;
 import com.example.entities.Camera;
@@ -40,6 +42,7 @@ public class ImageProfiler {
 		StreamSupport.stream(cameraRepo.findAll().spliterator(), true)
 				.forEach(cam -> {
 					try {
+						System.out.println("processing cam " + cam.getNamedLocation());
 						this.profileImage(cam, this.fetchImage(cam));
 					} catch (Exception e) {
 						// TODO Auto-generated catch block
@@ -80,7 +83,8 @@ public class ImageProfiler {
 			os.close();
 
 			capture.setSaveUri(saveUri);
-			capture.setTimestamp(LocalDate.now());
+			capture.setTimestamp(LocalTime.now());
+			capture.setDate(LocalDate.now());
 //			List<PhotoCapture> photos = camera.getPhotos();
 //			photos.add(capture);
 //			camera.setPhotos(photos);
@@ -138,7 +142,14 @@ public class ImageProfiler {
 		capture.setResults(results);
 		photos.add(capture);
 		cam.setPhotos(photos);
-		cameraRepo.save(cam);
+		System.out.println("saving photos to " + cam.getNamedLocation());
+		try {
+			cameraRepo.save(cam);
+		} catch (TransactionSystemException e) {
+			System.out.println("concurrent commit, waiting random interval");
+			Thread.sleep((long) (2000 * Math.random()));
+			cameraRepo.save(cam);
+		}
 		
 	}
 }
