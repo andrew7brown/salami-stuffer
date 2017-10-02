@@ -58,7 +58,7 @@ for page in details_pages:
     stuff.append(get_details(details_soup))
 
 f = open('cams.out', 'w')
-f.write(json.dumps(stuff))
+f.write(json.dumps(stuff, sort_keys=True, indent=4))
 f.close()
 
 
