@@ -9,3 +9,4 @@ src/main/resources/static
 *.jpg
 *.jpeg
 .DS_Store
+*.pyc
