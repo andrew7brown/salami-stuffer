@@ -1,4 +1,5 @@
 import requests
+import json
 from bs4 import BeautifulSoup
 
 def get_soup(page):
@@ -46,17 +47,18 @@ details_url = 'https://www.insecam.org'
 stuff = []
 
 details_pages = []
-for x in range(1, 2):
+for x in range(1, 501):
     print(f"Scraping {url}{x}")
     soup = get_soup(url + str(x))
     details_pages += get_details_pages(soup)
     
 for page in details_pages:
+    print(f"Getting details for {details_url}{page}")
     details_soup = get_soup(details_url + page)
     stuff.append(get_details(details_soup))
 
 f = open('cams.out', 'w')
-f.write(str(stuff))
+f.write(json.dumps(stuff))
 f.close()
 
 
