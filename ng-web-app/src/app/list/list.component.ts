@@ -3,9 +3,11 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CameraService } from '../camera.service';
 import { Camera } from '../camera';
 
+import { DetailsModalComponent } from '../details-modal/details-modal.component'
+
 import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
-
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -20,10 +22,17 @@ export class ListComponent implements OnInit {
   private alive: boolean;
 
 
-  constructor(private cameraService: CameraService) {
+  constructor(private cameraService: CameraService, public dialog: MdDialog) {
     this.alive = true;
     this.interval = 10000;
     this.timer = Observable.timer(0, this.interval);
+  }
+
+  openDialog(camera: Camera): void {
+    let dialogRef = this.dialog.open(DetailsModalComponent, {
+      width: '250px',
+      data: { camera:  camera }
+    });
   }
 
   ngOnInit() {

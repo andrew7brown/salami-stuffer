@@ -3,7 +3,7 @@
 </div>
 
 <div id="list" *ngFor="let cam of cams;  let i=index">
- <md-card *ngIf="i<12">
+ <md-card *ngIf="i<12" (click)="openDialog(cam)">
    {{cam.namedLocation}}
  </md-card>
 </div>
