@@ -17,9 +17,9 @@ public class Camera {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 
-	String latitude;
+	Double latitude;
 	
-	String longitude;
+	Double longitude;
 	
 	String namedLocation;
 	
@@ -32,7 +32,7 @@ public class Camera {
 	
 	public Camera(){};
 	
-	public Camera(String latitude, String longitude, String namedLocation, String url, Boolean active) {
+	public Camera(Double latitude, Double longitude, String namedLocation, String url, Boolean active) {
 		this.latitude = latitude;
 		this.longitude = longitude;
 		this.namedLocation = namedLocation;
@@ -41,7 +41,7 @@ public class Camera {
 		this.photos = new ArrayList<PhotoCapture>();
 	}
 	
-	public Camera(String latitude, String longitude, String namedLocation, String url, Boolean active,
+	public Camera(Double latitude, Double longitude, String namedLocation, String url, Boolean active,
 			List<PhotoCapture> photos) {
 		this.latitude = latitude;
 		this.longitude = longitude;
@@ -52,6 +52,14 @@ public class Camera {
 	}
 
 
+	public Camera(int latitude, int longitude,String namedLocation, String url, Boolean active) {
+		this.latitude = (double) latitude;
+		this.longitude = (double) longitude;
+		this.namedLocation = namedLocation;
+		this.url = url;
+		this.active = active;
+	}
+
 	public int getId() {
 		return id;
 	}
@@ -60,19 +68,19 @@ public class Camera {
 		this.id = id;
 	}
 
-	public String getLatitude() {
+	public Double getLatitude() {
 		return latitude;
 	}
 
-	public void setLatitude(String latitude) {
+	public void setLatitude(Double latitude) {
 		this.latitude = latitude;
 	}
 
-	public String getLongitude() {
+	public Double getLongitude() {
 		return longitude;
 	}
 
-	public void setLongitude(String longitude) {
+	public void setLongitude(Double longitude) {
 		this.longitude = longitude;
 	}
 
