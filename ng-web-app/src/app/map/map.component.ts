@@ -44,7 +44,6 @@ private zoom: number;
 
   openDialog(camera: Camera): void {
     let dialogRef = this.dialog.open(DetailsModalComponent, {
-      width: '250px',
       data: { camera:  camera }
     });
   }

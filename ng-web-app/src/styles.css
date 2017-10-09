@@ -5,3 +5,16 @@ body {
   background-color: black;
   color: white;
 }
+
+.mat-dialog-container {
+  width: 200em !important;
+}
+
+.md-dialog-container {
+  position: absolute !important;
+}
+
+md-dialog {
+  max-width: 90% !important;
+  max-height: 90% !important;
+}

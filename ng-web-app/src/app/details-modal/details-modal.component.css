@@ -1,0 +1,10 @@
+img {
+  width: 50%;
+  height: 50%;
+}
+
+#modal {
+  text-align: center;
+  width: 200em;
+  height: auto;
+}
