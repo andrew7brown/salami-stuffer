@@ -4,8 +4,10 @@ import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import 'rxjs/add/operator/map';
 
-import { CameraService } from '../camera.service';
 import { Camera } from '../camera';
+
+import { DetailsModalComponent } from '../details-modal/details-modal.component'
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { GoogleMapsAPIWrapper } from '@agm/core';
 declare var google: any;
@@ -18,51 +20,40 @@ declare var google: any;
 export class MapComponent implements OnInit, OnDestroy{
 
 map: any;
-private cams: Camera[];
+@Input('cams')private cams: Camera[];
 private lat: number;
 private lng: number;
 private zoom: number;
-private alive: boolean;
-private timer: Observable<number>;
-private interval: number;
 
-  constructor(private cameraService: CameraService, public gMaps: GoogleMapsAPIWrapper) {
-
+  constructor(public gMaps: GoogleMapsAPIWrapper, public dialog: MdDialog) {
   	this.lat = 39.7;
   	this.lng = -104;
   	this.zoom = 1;
-  	this.alive = true;
-  	this.interval = 10000;
-    this.timer = Observable.timer(0, this.interval);
   }
 
-  getMockCameras() {
-  	return this.cameraService.getMockCamerasPromise().then(cameras => this.cams = cameras);
-  }
-
-  centerMap(latitude: number, longitude: number) {
-    console.log("centering " + latitude + ' ' + longitude)
-    const position = new google.maps.LatLng(latitude, longitude);
+  centerMap(camera: Camera) {
+    console.log("centering " + camera.latitude + ' ' + camera.longitude)
+    const position = new google.maps.LatLng(camera.latitude, camera.longitude);
     this.map.panTo(position);
+    this.openDialog(camera)
   }
 
   public loadAPIWrapper(map) {
     this.map = map;
   }
 
+  openDialog(camera: Camera): void {
+    let dialogRef = this.dialog.open(DetailsModalComponent, {
+      width: '250px',
+      data: { camera:  camera }
+    });
+  }
+
   ngOnInit() {
-  	this.timer
-  		.takeWhile(() => this.alive)
-  		.subscribe(() => {
-  			this.cameraService.getCameras().subscribe((cameras) => {
-  				this.cams = cameras;
-  				console.log('fetching new cameras');
-  			});
-  		});
+
   }
 
   ngOnDestroy() {
-    this.alive = false; // switches your IntervalObservable off
   }
 
 }

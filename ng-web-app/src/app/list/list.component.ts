@@ -1,13 +1,14 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
 import { CameraService } from '../camera.service';
 import { Camera } from '../camera';
 
 import { DetailsModalComponent } from '../details-modal/details-modal.component'
+import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
 
 import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
-import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
+
 import { HttpClient } from '@angular/common/http';
 
 @Component({
@@ -16,7 +17,7 @@ import { HttpClient } from '@angular/common/http';
   styleUrls: ['./list.component.css']
 })
 export class ListComponent implements OnInit {
-  private cams: Camera[];
+  @Input('cams') private cams: Camera[];
   private interval: number;
   private timer: Observable<number>;
   private alive: boolean;
@@ -36,14 +37,14 @@ export class ListComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.timer
-      .takeWhile(() => this.alive)
-      .subscribe(() => {
-        this.cameraService.getCameras().subscribe((cameras) => {
-          this.cams = cameras;
-          console.log('fetching new cameras list');
-        });
-      });
+    // this.timer
+    //   .takeWhile(() => this.alive)
+    //   .subscribe(() => {
+    //     this.cameraService.getCameras().subscribe((cameras) => {
+    //       this.cams = cameras;
+    //       console.log('fetching new cameras list');
+    //     });
+    //   });
   }
 
   ngOnDestroy() {

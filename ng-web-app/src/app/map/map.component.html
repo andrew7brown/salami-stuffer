@@ -138,7 +138,7 @@
   <agm-marker *ngFor="let cam of cams"
             [latitude]="cam.latitude"
             [longitude]="cam.longitude"
-            (markerClick)="centerMap(cam.latitude, cam.longitude)"> <p>{{cam}}</p>
+            (markerClick)="centerMap(cam)"> <p>{{cam}}</p>
   </agm-marker>
 
   <core-map-content (onMapLoad)='loadAPIWrapper($event)'>></core-map-content>
