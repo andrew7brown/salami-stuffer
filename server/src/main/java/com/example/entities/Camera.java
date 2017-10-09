@@ -15,7 +15,7 @@ public class Camera {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	int id;
+	Long id;
 
 	Double latitude;
 	
@@ -52,7 +52,7 @@ public class Camera {
 	}
 
 
-	public Camera(int latitude, int longitude,String namedLocation, String url, Boolean active) {
+	public Camera(int latitude, int longitude, String namedLocation, String url, Boolean active) {
 		this.latitude = (double) latitude;
 		this.longitude = (double) longitude;
 		this.namedLocation = namedLocation;
@@ -60,11 +60,11 @@ public class Camera {
 		this.active = active;
 	}
 
-	public int getId() {
+	public Long getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Long id) {
 		this.id = id;
 	}
 
