@@ -101,7 +101,7 @@ public class ImageProfiler {
 	public void profileImage(Camera cam, PhotoCapture capture) throws Exception {
 		
 		Process p = Runtime.getRuntime()
-				.exec("/Library/Frameworks/Python.framework/Versions/3.6/bin/python3 ImageClassifier.py " + capture.getSaveUri() + " 5");
+				.exec("/Users/andrew7brown/anaconda/bin/python ImageClassifier.py " + capture.getSaveUri() + " 5");
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		String s = "";
