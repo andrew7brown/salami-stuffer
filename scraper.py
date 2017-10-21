@@ -16,7 +16,7 @@ def get_images(soup):
         except:
             print()
     return images
-      
+
 def get_details_pages(soup):
     thumbnails = BeautifulSoup(str(soup.find_all('div', class_='thumbnail-item')), 'html.parser')
     details_pages = []
@@ -39,7 +39,7 @@ def get_details(soup):
     details['latitude'] = find_detail(soup, 'Latitude:')
     details['longitude'] = find_detail(soup, 'Longitude:')
     return details
-    
+
 
 
 url = 'https://www.insecam.org/en/byrating?page='
@@ -51,7 +51,7 @@ for x in range(1, 501):
     print(f"Scraping {url}{x}")
     soup = get_soup(url + str(x))
     details_pages += get_details_pages(soup)
-    
+
 for page in details_pages:
     print(f"Getting details for {details_url}{page}")
     details_soup = get_soup(details_url + page)
