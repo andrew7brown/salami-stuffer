@@ -34,6 +34,14 @@ public class Camera {
 	
 	public Camera(){};
 	
+	public Camera(Double latitude, Double longitude, String namedLocation, String url) {
+		this.latitude = latitude;
+		this.longitude = longitude;
+		this.namedLocation = namedLocation;
+		this.url = url;
+		this.photos = new ArrayList<PhotoCapture>();
+	}
+	
 	public Camera(Double latitude, Double longitude, String namedLocation, String url, Boolean active) {
 		this.latitude = latitude;
 		this.longitude = longitude;
