@@ -129,7 +129,7 @@ public class ImageProfiler {
 		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-		//objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 		List<Result> results = objectMapper.readValue(jsonString, new TypeReference<List<Result>>() {
 		});
 
