@@ -2,8 +2,10 @@
   <p>
     {{data.camera.namedLocation}}
   </p>
-  <p>
-  	{{data.camera.photos}}
-  </p>
   <img src={{data.camera.url}} alt="">
+    <div class="div" *ngFor="let photo of data.camera.photos">
+  		<div class="div" *ngFor="let result of photo.results">
+  			<span>{{ result.tags }} | {{ result.weight }}</span>
+  		</div>
+  </div>
 </div>
