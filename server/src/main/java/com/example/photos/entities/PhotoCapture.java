@@ -1,9 +1,10 @@
-package com.example.entities;
+package com.example.photos.entities;
 
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ public class PhotoCapture {
     @GeneratedValue(strategy=GenerationType.AUTO)
 	int id;
 	
+	String uuid;
+	
 	String saveUri;
 
 	LocalTime timestamp;
@@ -28,9 +31,12 @@ public class PhotoCapture {
 	@OneToMany(cascade=CascadeType.ALL)
 	List<Result> results;
 
-	public PhotoCapture(){};
+	public PhotoCapture() {
+		this.uuid = UUID.randomUUID().toString();
+	};
 	
 	public PhotoCapture(String saveUri, LocalTime timestamp, LocalDate date) {
+		this.uuid = UUID.randomUUID().toString();
 		this.saveUri = saveUri;
 		this.timestamp = timestamp;
 		this.date = date;
@@ -38,6 +44,7 @@ public class PhotoCapture {
 	}
 	
 	public PhotoCapture(String saveUri, LocalTime timestamp, LocalDate date, List<Result> results) {
+		this.uuid = UUID.randomUUID().toString();
 		this.saveUri = saveUri;
 		this.timestamp = timestamp;
 		this.date = date;
@@ -82,5 +89,13 @@ public class PhotoCapture {
 
 	public void setDate(LocalDate date) {
 		this.date = date;
+	}
+
+	public String getUuid() {
+		return uuid;
+	}
+
+	public void setUuid(String uuid) {
+		this.uuid = uuid;
 	}
 }

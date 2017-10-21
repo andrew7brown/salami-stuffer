@@ -1,7 +1,5 @@
-package com.example.controller;
+package com.example.camera.controller;
 
-import java.time.LocalDate;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
@@ -13,11 +11,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.example.entities.Camera;
-import com.example.entities.PhotoCapture;
-import com.example.entities.Result;
+import com.example.camera.entities.Camera;
+import com.example.camera.repo.CameraRepository;
 import com.example.profiler.ImageProfiler;
-import com.example.repo.CameraRepository;
 
 @RestController
 public class CameraController {

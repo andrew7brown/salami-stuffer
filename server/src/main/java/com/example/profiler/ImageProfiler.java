@@ -16,11 +16,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.TransactionSystemException;
 
-import com.example.controller.CameraController;
-import com.example.entities.Camera;
-import com.example.entities.PhotoCapture;
-import com.example.entities.Result;
-import com.example.repo.CameraRepository;
+import com.example.camera.controller.CameraController;
+import com.example.camera.entities.Camera;
+import com.example.camera.repo.CameraRepository;
+import com.example.photos.entities.PhotoCapture;
+import com.example.photos.entities.Result;
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
@@ -126,9 +126,10 @@ public class ImageProfiler {
 	
 		//jsonString = "{ \"tags\": \"cinema, movie theater, movie theatre, movie house, picture palace\", \"weight\": 0.25862458}";
 		//jsonString = "[{‘tags’: ‘studio couch, day bed’, ‘weight’: 0.66928029}, {‘tags’: ‘patio, terrace’, ‘weight’: 0.11289313}, {‘tags’: ‘sliding door’, ‘weight’: 0.082315378}, {‘tags’: ‘window shade’, ‘weight’: 0.050180443}, {‘tags’: ‘table lamp’, ‘weight’: 0.011996713}]";
+		
 		ObjectMapper objectMapper = new ObjectMapper();
 		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+		//objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
 		List<Result> results = objectMapper.readValue(jsonString, new TypeReference<List<Result>>() {
 		});
 

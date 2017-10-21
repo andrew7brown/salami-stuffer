@@ -1,4 +1,4 @@
-package com.example.entities;
+package com.example.photos.entities;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
