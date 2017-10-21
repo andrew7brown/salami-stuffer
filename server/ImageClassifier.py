@@ -130,7 +130,7 @@ def run_inference_on_image(image, score_count):
         for node_id in top_k:
             human_string = node_lookup.id_to_string(node_id)
             score = predictions[node_id]
-            scores = {"tags": human_string, "weight": float(score)}
+            scores = {"tags": human_string, "weight": score}
             list_of_scores.append(scores)
     return list_of_scores
 
@@ -159,7 +159,7 @@ def maybe_download_and_extract():
 def classifyImage(image, score_count):
     scores = run_inference_on_image(image, score_count)
 
-    return json.dumps(scores)
+    return json.dumps(str(scores))
 
 
 def main():
