@@ -34,7 +34,7 @@ import { CoreMapContentComponent } from './map/core-map-content/core-map-content
     MatDialogModule,
     MatListModule,
     MdButtonModule,
-    MdCheckboxModule
+    MdCheckboxModule,
   ],
   entryComponents: [
     DetailsModalComponent
