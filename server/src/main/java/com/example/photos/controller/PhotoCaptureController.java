@@ -40,8 +40,8 @@ public class PhotoCaptureController {
 	public @ResponseBody byte[] getImageWithMediaType(@RequestParam("uuid") String uuid) throws IOException {
 		PhotoCapture photo = photoRepo.findPhotoCaptureByUuid(uuid);
 		System.out.println(photo.getUuid());
-		System.out.println(photo.getSaveUri());
-		InputStream in = getClass().getResourceAsStream("../" + photo.getSaveUri().substring(1));
+		System.out.println(photo.getSaveUri().substring(1));
+		InputStream in = getClass().getResourceAsStream("/Users/eginter/git/salami-stuffer/server" + photo.getSaveUri().substring(1));
 		return IOUtils.toByteArray(in);
 	}
 }
