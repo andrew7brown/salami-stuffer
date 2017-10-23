@@ -4,8 +4,8 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.example.photos.entities.PhotoCapture;
 
-public interface PhotoCaptureRepository extends CrudRepository<PhotoCapture, Long>{
+public interface PhotoCaptureRepository extends CrudRepository<PhotoCapture, Integer>{
 
-	public PhotoCapture findOnePhotoCaptureByUuid(String uuid);
+	public PhotoCapture findPhotoCaptureByUuid(String uuid);
 	
 }
