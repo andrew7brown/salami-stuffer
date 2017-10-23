@@ -17,7 +17,7 @@ public class Camera {
 
 	@Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-	Long id;
+	int id;
 
 	Double latitude;
 	
@@ -29,7 +29,7 @@ public class Camera {
 	
 	Boolean active;
 	
-	@OneToMany(cascade=CascadeType.ALL)
+	@OneToMany(cascade=CascadeType.ALL, mappedBy ="camera")
 	List<PhotoCapture> photos;
 	
 	public Camera(){};
@@ -70,11 +70,12 @@ public class Camera {
 		this.active = active;
 	}
 
-	public Long getId() {
+	public int getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(int id)
+	{
 		this.id = id;
 	}
 

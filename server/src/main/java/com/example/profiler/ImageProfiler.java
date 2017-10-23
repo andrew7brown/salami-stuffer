@@ -39,16 +39,19 @@ public class ImageProfiler {
 	}
 
 	public void run() {
-		StreamSupport.stream(cameraRepo.findAll().spliterator(), true)
-				.forEach(cam -> {
-					try {
-						System.out.println("processing cam " + cam.getNamedLocation());
-						this.profileImage(cam, this.fetchImage(cam));
-					} catch (Exception e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				});
+		StreamSupport.stream(cameraRepo.findAll().spliterator(), false).forEach(cam -> {
+			try {
+				System.out.println("processing cam " + cam.getNamedLocation());
+				if (cam.getUrl().toLowerCase().contains(".jpg")) {
+					this.profileImage(cam, this.fetchImage(cam));
+				} else {
+					System.out.println("skipping mjpg");
+				}
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		});
 	}
 
 	public Camera getCurrentCamera(String url) {
@@ -64,7 +67,7 @@ public class ImageProfiler {
 
 	public PhotoCapture fetchImage(Camera camera) {
 
-		String saveUri = "./src/main/resources/images/" + camera.getUrl().substring(7, 19) + LocalDate.now() + ".jpg";
+		String saveUri = "./images/" + camera.getUrl().substring(7, 19) + LocalDate.now() + ".jpg";
 		PhotoCapture capture = new PhotoCapture();
 		System.out.println("save url: " + saveUri);
 		try {
@@ -85,10 +88,10 @@ public class ImageProfiler {
 			capture.setSaveUri(saveUri);
 			capture.setTimestamp(LocalTime.now());
 			capture.setDate(LocalDate.now());
-//			List<PhotoCapture> photos = camera.getPhotos();
-//			photos.add(capture);
-//			camera.setPhotos(photos);
-//			cameraRepo.save(camera);
+			// List<PhotoCapture> photos = camera.getPhotos();
+			// photos.add(capture);
+			// camera.setPhotos(photos);
+			// cameraRepo.save(camera);
 
 			System.out.println("PhotoCapture added to Camera");
 
@@ -99,9 +102,10 @@ public class ImageProfiler {
 	}
 
 	public void profileImage(Camera cam, PhotoCapture capture) throws Exception {
-		
+
 		Process p = Runtime.getRuntime()
-				.exec("/Users/andrew7brown/anaconda/bin/python ImageClassifier.py " + capture.getSaveUri() + " 5");
+				.exec("/Library/Frameworks/Python.framework/Versions/3.6/bin/python3 ImageClassifier.py "
+						+ capture.getSaveUri() + " 5");
 		BufferedReader stdInput = new BufferedReader(new InputStreamReader(p.getInputStream()));
 		BufferedReader stdError = new BufferedReader(new InputStreamReader(p.getErrorStream()));
 		String s = "";
@@ -118,39 +122,50 @@ public class ImageProfiler {
 		while ((s = stdError.readLine()) != null) {
 			System.out.println(s);
 		}
-		//jsonString = "[{'tags': 'solar dish, solar collector, solar furnace', 'weight': 0.81778657}, {'tags': 'bannister, banister, balustrade, balusters, handrail', 'weight': 0.027153652}, {'tags': 'bullet train, bullet', 'weight': 0.02078932}, {'tags': 'streetcar, tram, tramcar, trolley, trolley car', 'weight': 0.01631031}]";
+		// jsonString = "[{'tags': 'solar dish, solar collector, solar furnace',
+		// 'weight': 0.81778657}, {'tags': 'bannister, banister, balustrade,
+		// balusters, handrail', 'weight': 0.027153652}, {'tags': 'bullet train,
+		// bullet', 'weight': 0.02078932}, {'tags': 'streetcar, tram, tramcar,
+		// trolley, trolley car', 'weight': 0.01631031}]";
 		jsonString = jsonString.replaceAll("\"", "");
 		System.out.println("json: " + jsonString);
-		
-		int returnVal = p.waitFor();
-	
-		//jsonString = "{ \"tags\": \"cinema, movie theater, movie theatre, movie house, picture palace\", \"weight\": 0.25862458}";
-		//jsonString = "[{‘tags’: ‘studio couch, day bed’, ‘weight’: 0.66928029}, {‘tags’: ‘patio, terrace’, ‘weight’: 0.11289313}, {‘tags’: ‘sliding door’, ‘weight’: 0.082315378}, {‘tags’: ‘window shade’, ‘weight’: 0.050180443}, {‘tags’: ‘table lamp’, ‘weight’: 0.011996713}]";
-		
-		ObjectMapper objectMapper = new ObjectMapper();
-		objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
-		objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
-		List<Result> results = objectMapper.readValue(jsonString, new TypeReference<List<Result>>() {
-		});
 
-		System.out.println("size: " + results.size());
-		
-		for (Result result : results) {
-			System.out.println(result.getTags() + " " + result.getWeight());
+		int returnVal = p.waitFor();
+
+		// jsonString = "{ \"tags\": \"cinema, movie theater, movie theatre,
+		// movie house, picture palace\", \"weight\": 0.25862458}";
+		// jsonString = "[{‘tags’: ‘studio couch, day bed’, ‘weight’:
+		// 0.66928029}, {‘tags’: ‘patio, terrace’, ‘weight’: 0.11289313},
+		// {‘tags’: ‘sliding door’, ‘weight’: 0.082315378}, {‘tags’: ‘window
+		// shade’, ‘weight’: 0.050180443}, {‘tags’: ‘table lamp’, ‘weight’:
+		// 0.011996713}]";
+
+		if (!jsonString.isEmpty()) {
+
+			ObjectMapper objectMapper = new ObjectMapper();
+			objectMapper.configure(DeserializationFeature.ACCEPT_SINGLE_VALUE_AS_ARRAY, true);
+			objectMapper.configure(JsonParser.Feature.ALLOW_SINGLE_QUOTES, true);
+			List<Result> results = objectMapper.readValue(jsonString, new TypeReference<List<Result>>() {
+			});
+
+			System.out.println("size: " + results.size());
+
+			for (Result result : results) {
+				System.out.println(result.getTags() + " " + result.getWeight());
+			}
+			List<PhotoCapture> photos = cam.getPhotos();
+
+			capture.setResults(results);
+			photos.add(capture);
+			cam.setPhotos(photos);
+			System.out.println("saving photos to " + cam.getNamedLocation());
+			try {
+				cameraRepo.save(cam);
+			} catch (TransactionSystemException e) {
+				System.out.println("concurrent commit, waiting random interval");
+				Thread.sleep((long) (2000 * Math.random()));
+				cameraRepo.save(cam);
+			}
 		}
-		List<PhotoCapture> photos = cam.getPhotos();
-		
-		capture.setResults(results);
-		photos.add(capture);
-		cam.setPhotos(photos);
-		System.out.println("saving photos to " + cam.getNamedLocation());
-		try {
-			cameraRepo.save(cam);
-		} catch (TransactionSystemException e) {
-			System.out.println("concurrent commit, waiting random interval");
-			Thread.sleep((long) (2000 * Math.random()));
-			cameraRepo.save(cam);
-		}
-		
 	}
 }

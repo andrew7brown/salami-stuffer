@@ -9,7 +9,7 @@ import com.example.photos.entities.PhotoCapture;
 @Projection(name = "inlineCamera", types = { Camera.class })
 public interface InlineCamera {
 
-	Long getId();
+	int getId();
 	Double getLatitude();
 	Double getLongitude();
 	String getNamedLocation();
