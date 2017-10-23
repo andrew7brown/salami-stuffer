@@ -28,11 +28,15 @@ with open('cams_update.json') as data:
 for item in json_data:
     if ".jpg" in item['url'] and "faststream" not in item['url']:
         print(f'Processing {item["url"]}')
-        image = get_image(item['url'])
+        try:
+            image = get_image(item['url'])
+        except:
+            print("Error getting and saving image.")
+            continue
         try:
             tags = ImageClassifier.classifyImage(image=image, score_count=5)
         except:
-            print("Gross error...")
+            print("Gross error... when classifying image. Image probably wasn't fully gotten.")
             continue
 
         # Setup the json to send
