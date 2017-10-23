@@ -88,6 +88,7 @@ public class ImageProfiler {
 			capture.setSaveUri(saveUri);
 			capture.setTimestamp(LocalTime.now());
 			capture.setDate(LocalDate.now());
+			capture.setCamera(camera);
 			// List<PhotoCapture> photos = camera.getPhotos();
 			// photos.add(capture);
 			// camera.setPhotos(photos);
