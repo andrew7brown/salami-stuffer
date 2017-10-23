@@ -1,7 +1,7 @@
 import { Component, Input, OnInit, OnDestroy } from '@angular/core';
 
-import { CameraService } from '../camera.service';
-import { Camera } from '../camera';
+import { CameraService } from '../services/camera/camera.service';
+import { Camera } from '../entities/camera';
 
 import { DetailsModalComponent } from '../details-modal/details-modal.component'
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';

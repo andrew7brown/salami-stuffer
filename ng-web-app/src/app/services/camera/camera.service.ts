@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
-import { Camera } from './camera'
-import { CAMERAS } from './mock-cameras'
+import { Camera } from '../../entities/camera'
+import { CAMERAS } from '../../mock-cameras'
 
 import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";

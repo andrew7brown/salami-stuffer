@@ -1,6 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { CameraService } from './camera.service';
-import { Camera } from './camera';
+import { CameraService } from './services/camera/camera.service';
+import { Camera } from './entities/camera';
 import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 

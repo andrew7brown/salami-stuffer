@@ -1,4 +1,4 @@
-import { Camera } from './camera';
+import { Camera } from './entities/camera';
 
 export const CAMERAS: Camera[] = [
 		  // {

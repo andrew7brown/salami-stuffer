@@ -11,7 +11,7 @@ import { MapComponent } from './map/map.component';
 import { AgmCoreModule, GoogleMapsAPIWrapper } from '@agm/core';
 import { ListComponent } from './list/list.component';
 
-import { CameraService } from './camera.service';
+import { CameraService } from './services/camera/camera.service';
 import { DetailsModalComponent } from './details-modal/details-modal.component';
 import { CoreMapContentComponent } from './map/core-map-content/core-map-content.component';
 

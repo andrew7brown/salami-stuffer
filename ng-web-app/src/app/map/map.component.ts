@@ -4,7 +4,7 @@ import { Observable } from "rxjs";
 import { IntervalObservable } from "rxjs/observable/IntervalObservable";
 import 'rxjs/add/operator/map';
 
-import { Camera } from '../camera';
+import { Camera } from '../entities/camera';
 
 import { DetailsModalComponent } from '../details-modal/details-modal.component'
 import { MdDialog, MdDialogRef, MD_DIALOG_DATA } from '@angular/material';
