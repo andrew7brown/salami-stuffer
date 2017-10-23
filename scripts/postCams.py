@@ -7,7 +7,7 @@ import io
 import time
 import uuid
 
-SAVE_DIR = '../server/src/main/resources/images/'
+SAVE_DIR = '../server/images/'
 
 def get_image(url):
     file = urllib.request.urlopen(url).read()
@@ -29,8 +29,13 @@ for item in json_data:
     if ".jpg" in item['url'] and "faststream" not in item['url']:
         print(f'Processing {item["url"]}')
         image = get_image(item['url'])
-        tags = ImageClassifier.classifyImage(image=image, score_count=5)
+        try:
+            tags = ImageClassifier.classifyImage(image=image, score_count=5)
+        except:
+            print("Gross error...")
+            continue
 
+        # Setup the json to send
         photos = {}
         photos['results'] = tags
         photos['uuid'] = str(uuid.uuid4())
@@ -38,20 +43,17 @@ for item in json_data:
         photos_json = json.dumps(photos)
         j = json.loads(photos_json)
 
-        print("POSTING: " + json.dumps(j, indent=4, sort_keys=True))
+        # Send it
+        photo_response = requests.post('http://localhost:8080/photoCaptures', json=j)
+        photo_response_json = json.loads(photo_response.text)
+        photo_href = photo_response_json['_links']['self']['href']
 
-        response = requests.post('http://localhost:8080/photoCaptures', json=j)
+        # Send the associated camera
+        camera_response = requests.post('http://localhost:8080/cameras', json=item)
+        camera_response_json = json.loads(camera_response.text)
+        camera_href = camera_response_json['_links']['self']['href']
 
-        print("REPSONSE: " + response.text)
-        # cam_dict = {}
-        # cam_dict['latitude'] = item['latitude']
-        # cam_dict['longitude'] = item['longitude']
-        # cam_dict['url'] = item['url']
-        # cam_dict['photos'] = []
-        # cam_dict['photos'].append(dict())
-        # cam_dict['photos'][0]['uuid'] = str(uuid.uuid4())
-        # cam_dict['photos'][0]['saveUri'] = image
-        # cam_dict['photos'][0]['results'] = json.loads(tags)
+        # Link em
+        put_response = requests.put(photo_href + '/camera', headers = {'Content-Type':'text/uri-list'}, data=camera_href)
 
-
-        # requests.post('http://localhost:8080/cameras', json=item)
+        print(put_response.status_code)
