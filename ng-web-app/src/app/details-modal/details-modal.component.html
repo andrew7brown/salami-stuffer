@@ -4,6 +4,7 @@
   </p>
   <img src={{data.camera.url}} alt="">
     <div class="div" *ngFor="let photo of data.camera.photos">
+    	<app-async-image uuid={{photo.uuid}}></app-async-image>
   		<div class="div" *ngFor="let result of photo.results">
   			<span>{{ result.tags }} | {{ result.weight }}</span>
   		</div>

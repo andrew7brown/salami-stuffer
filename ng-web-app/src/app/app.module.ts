@@ -14,6 +14,8 @@ import { ListComponent } from './list/list.component';
 import { CameraService } from './services/camera/camera.service';
 import { DetailsModalComponent } from './details-modal/details-modal.component';
 import { CoreMapContentComponent } from './map/core-map-content/core-map-content.component';
+import { AsyncImageComponent } from './async-image/async-image.component';
+import { SafePipe } from './pipes/safe.pipe';
 
 @NgModule({
   declarations: [
@@ -21,7 +23,9 @@ import { CoreMapContentComponent } from './map/core-map-content/core-map-content
     MapComponent,
     ListComponent,
     DetailsModalComponent,
-    CoreMapContentComponent
+    CoreMapContentComponent,
+    AsyncImageComponent,
+    SafePipe
   ],
   imports: [
     AgmCoreModule.forRoot({

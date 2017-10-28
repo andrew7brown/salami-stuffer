@@ -38,6 +38,16 @@ cameras: any;
   	return Observable.of(this.cams);
   }
 
+  getImage(uuid: string): any {
+    try {
+      return this.http.get('http://localhost:8080/image?uuid=' + uuid, {responseType: 'blob'})
+      .map(res => URL.createObjectURL(res))
+      .toPromise();
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   async fetchCamerasFromServer(): Promise<Camera[]> {
     try {
       let response = await this.http.get('http://localhost:8080/cameras/').toPromise();
